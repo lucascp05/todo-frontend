@@ -50,9 +50,9 @@ function App() {
         + Nova Tarefa
       </button>
       <div style={{ display: 'flex', gap: '24px', width: '100%', maxWidth: '1100px', justifyContent: 'center' }}>
-        <KanbanColumn title="Pendência" tasks={todo} color="bg-red-500" />
-        <KanbanColumn title="Fazendo" tasks={doing} color="bg-yellow-500" />
-        <KanbanColumn title="Feito" tasks={done} color="bg-green-500" />
+        <KanbanColumn title="Pendências" tasks={todo} color="bg-red-500" onDelete={fetchTasks} />
+        <KanbanColumn title="Fazendo" tasks={doing} color="bg-yellow-500" onDelete={fetchTasks} />
+        <KanbanColumn title="Feito" tasks={done} color="bg-green-500" onDelete={fetchTasks} />
       </div>
       <CreateTaskModal
         isOpen={isModalOpen}
