@@ -16,7 +16,7 @@ export function TaskCard({ task, onDelete }: TaskCardProps) {
   }
 
   return (
-    <div className="bg-[#1a1a24] border border-[#2e2e3e] rounded-xl p-4 cursor-grab group">
+    <div className="bg-[#1a1a24] border border-[#2e2e3e] rounded-xl cursor-grab group" style={{ padding: '16px 20px' }}>
       <div className="flex items-start justify-between gap-2">
         <h3 className="text-white font-medium text-sm">{task.title}</h3>
         <button
