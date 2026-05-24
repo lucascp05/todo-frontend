@@ -1,14 +1,18 @@
 import type { Task } from '../types/task'
 import { Trash2 } from 'lucide-react'
+import { useDraggable } from '@dnd-kit/core'
 import api from '../services/api'
 import toast from 'react-hot-toast'
 
 interface TaskCardProps {
   task: Task
   onDelete: () => void
+  onUpdate: () => void
 }
 
-export function TaskCard({ task, onDelete }: TaskCardProps) {
+export function TaskCard({ task, onDelete, onUpdate }: TaskCardProps) {
+  const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({ id: task.id })
+
   async function handleDelete() {
     await api.delete(`/tasks/${task.id}`)
     toast.success('Tarefa removida!')
@@ -16,11 +20,23 @@ export function TaskCard({ task, onDelete }: TaskCardProps) {
   }
 
   return (
-    <div className="bg-[#1a1a24] border border-[#2e2e3e] rounded-xl cursor-grab group" style={{ padding: '16px 20px' }}>
+    <div
+      ref={setNodeRef}
+      {...listeners}
+      {...attributes}
+      className="bg-[#1a1a24] border border-[#2e2e3e] rounded-xl cursor-grab group"
+      style={{
+        padding: '16px 20px',
+        transform: transform ? `translate(${transform.x}px, ${transform.y}px)` : undefined,
+        opacity: isDragging ? 0.5 : 1,
+        zIndex: isDragging ? 999 : undefined,
+      }}
+    >
       <div className="flex items-start justify-between gap-2">
         <h3 className="text-white font-medium text-sm">{task.title}</h3>
         <button
           onClick={handleDelete}
+          onPointerDown={e => e.stopPropagation()}
           className="text-gray-600 hover:text-red-400 transition-colors opacity-0 group-hover:opacity-100"
         >
           <Trash2 size={14} />
