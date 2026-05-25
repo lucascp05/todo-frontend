@@ -72,13 +72,14 @@ export function TaskCard({ task, onDelete, onUpdate }: TaskCardProps) {
       className="bg-[#1a1a24] border border-[#2e2e3e] rounded-xl cursor-grab group"
       style={{
         padding: '16px 20px',
+        minHeight: '86px',
         transform: transform ? `translate(${transform.x}px, ${transform.y}px)` : undefined,
         opacity: isDragging ? 0.5 : 1,
         zIndex: isDragging ? 999 : undefined,
       }}
     >
       <div className="flex items-start justify-between gap-2">
-        <h3 className="text-white font-medium text-sm">{task.title}</h3>
+        <h3 className="text-white font-medium text-base">{task.title}</h3>
         <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
           <button
             onClick={() => setIsEditing(true)}
@@ -97,7 +98,7 @@ export function TaskCard({ task, onDelete, onUpdate }: TaskCardProps) {
         </div>
       </div>
       {task.description && (
-        <p className="text-gray-400 text-xs mt-2">{task.description}</p>
+        <p className="text-gray-400 text-sm mt-2">{task.description}</p>
       )}
     </div>
   )

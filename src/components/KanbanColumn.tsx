@@ -17,7 +17,7 @@ export function KanbanColumn({ title, tasks, color, status, onDelete, onUpdate }
   return (
     <div
       ref={setNodeRef}
-      className="bg-[#13131a] border border-[#2e2e3e] rounded-2xl p-4 w-80 flex flex-col"
+      className="bg-[#13131a] border border-[#2e2e3e] rounded-2xl p-4 w-92 flex flex-col"
       style={{ borderColor: isOver ? '#7c3aed' : undefined, transition: 'border-color 0.2s' }}
     >
       <div className="flex items-center justify-center gap-2" style={{ paddingTop: '12px', paddingBottom: '12px' }}>

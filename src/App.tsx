@@ -41,7 +41,7 @@ function App() {
       <div style={{ minHeight: '100vh', backgroundColor: '#0f0f13', display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '28px 24px' }}>
         <Toaster position="top-right" />
         <div style={{ textAlign: 'center', marginBottom: '16px' }}>
-          <h1 style={{ color: 'white', fontSize: '36px', fontWeight: 'bold' }}>Kanban Board</h1>
+          <h1 style={{ color: 'white', fontSize: '36px', fontWeight: 'bold' }}>TaskBoard</h1>
           <p style={{ color: '#6b7280', marginTop: '8px', fontSize: '14px' }}>Gerencie suas tarefas com estilo</p>
         </div>
         <button
@@ -49,7 +49,7 @@ function App() {
           style={{
             backgroundColor: '#7c3aed',
             color: 'white',
-            padding: '8px 16px',
+            padding: '6px 14px',
             borderRadius: '12px',
             border: 'none',
             cursor: 'pointer',
