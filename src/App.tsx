@@ -36,6 +36,8 @@ function App() {
   const doing = tasks.filter(t => t.status === 'doing')
   const done = tasks.filter(t => t.status === 'done')
 
+  const progress = tasks.length === 0 ? 0 : Math.round((done.length / tasks.length) * 100)
+
   return (
     <DndContext onDragEnd={handleDragEnd}>
       <div style={{ minHeight: '100vh', backgroundColor: '#0f0f13', display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '28px 24px' }}>
@@ -63,6 +65,25 @@ function App() {
         >
           + Nova Tarefa
         </button>
+        <div style={{ width: '100%', maxWidth: '1100px', marginBottom: '24px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
+            <span style={{ color: '#6b7280', fontSize: '13px' }}>
+              {done.length} de {tasks.length} tarefas concluídas
+            </span>
+            <span style={{ color: '#6b7280', fontSize: '13px' }}>
+              {progress}%
+            </span>
+          </div>
+          <div style={{ backgroundColor: '#2e2e3e', borderRadius: '999px', height: '6px', width: '100%' }}>
+            <div style={{
+              backgroundColor: '#7c3aed',
+              borderRadius: '999px',
+              height: '6px',
+              width: `${progress}%`,
+              transition: 'width 0.5s ease'
+            }} />
+          </div>
+        </div>
         <div style={{ display: 'flex', gap: '24px', width: '100%', maxWidth: '1100px', justifyContent: 'center' }}>
           <KanbanColumn title="Pendências" tasks={todo} color="bg-red-500" status="todo" onDelete={fetchTasks} onUpdate={fetchTasks} />
           <KanbanColumn title="Fazendo" tasks={doing} color="bg-yellow-500" status="doing" onDelete={fetchTasks} onUpdate={fetchTasks} />
