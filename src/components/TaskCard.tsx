@@ -2,6 +2,7 @@ import { useState } from 'react'
 import type { Task } from '../types/task'
 import { Trash2, Pencil, Check, X } from 'lucide-react'
 import { useDraggable } from '@dnd-kit/core'
+import { motion } from 'framer-motion'
 import api from '../services/api'
 import toast from 'react-hot-toast'
 
@@ -37,7 +38,12 @@ export function TaskCard({ task, onDelete, onUpdate }: TaskCardProps) {
 
   if (isEditing) {
     return (
-      <div className="bg-[#1a1a24] border border-purple-500 rounded-xl" style={{ padding: '16px 20px' }}>
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="bg-[#1a1a24] border border-purple-500 rounded-xl"
+        style={{ padding: '16px 20px' }}
+      >
         <input
           type="text"
           value={title}
@@ -60,46 +66,52 @@ export function TaskCard({ task, onDelete, onUpdate }: TaskCardProps) {
             <X size={16} />
           </button>
         </div>
-      </div>
+      </motion.div>
     )
   }
 
   return (
-    <div
-      ref={setNodeRef}
-      {...listeners}
-      {...attributes}
-      className="bg-[#1a1a24] border border-[#2e2e3e] rounded-xl cursor-grab group"
-      style={{
-        padding: '16px 20px',
-        minHeight: '86px',
-        transform: transform ? `translate(${transform.x}px, ${transform.y}px)` : undefined,
-        opacity: isDragging ? 0.5 : 1,
-        zIndex: isDragging ? 999 : undefined,
-      }}
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: isDragging ? 0.5 : 1, y: 0 }}
+      exit={{ opacity: 0, y: -10 }}
+      transition={{ duration: 0.2 }}
     >
-      <div className="flex items-start justify-between gap-2">
-        <h3 className="text-white font-medium text-base">{task.title}</h3>
-        <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-          <button
-            onClick={() => setIsEditing(true)}
-            onPointerDown={e => e.stopPropagation()}
-            className="text-gray-600 hover:text-purple-400 transition-colors"
-          >
-            <Pencil size={14} />
-          </button>
-          <button
-            onClick={handleDelete}
-            onPointerDown={e => e.stopPropagation()}
-            className="text-gray-600 hover:text-red-400 transition-colors"
-          >
-            <Trash2 size={14} />
-          </button>
+      <div
+        ref={setNodeRef}
+        {...listeners}
+        {...attributes}
+        className="bg-[#1a1a24] border border-[#2e2e3e] rounded-xl cursor-grab group"
+        style={{
+          padding: '16px 20px',
+          minHeight: '86px',
+          transform: transform ? `translate(${transform.x}px, ${transform.y}px)` : undefined,
+          zIndex: isDragging ? 999 : undefined,
+        }}
+      >
+        <div className="flex items-start justify-between gap-2">
+          <h3 className="text-white font-medium text-base">{task.title}</h3>
+          <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+            <button
+              onClick={() => setIsEditing(true)}
+              onPointerDown={e => e.stopPropagation()}
+              className="text-gray-600 hover:text-purple-400 transition-colors"
+            >
+              <Pencil size={14} />
+            </button>
+            <button
+              onClick={handleDelete}
+              onPointerDown={e => e.stopPropagation()}
+              className="text-gray-600 hover:text-red-400 transition-colors"
+            >
+              <Trash2 size={14} />
+            </button>
+          </div>
         </div>
+        {task.description && (
+          <p className="text-gray-400 text-sm mt-2">{task.description}</p>
+        )}
       </div>
-      {task.description && (
-        <p className="text-gray-400 text-sm mt-2">{task.description}</p>
-      )}
-    </div>
+    </motion.div>
   )
 }

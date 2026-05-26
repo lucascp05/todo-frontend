@@ -1,6 +1,7 @@
 import type { Task } from '../types/task'
 import { TaskCard } from './TaskCard'
 import { useDroppable } from '@dnd-kit/core'
+import { motion } from 'framer-motion'
 
 interface KanbanColumnProps {
   title: string
@@ -15,8 +16,11 @@ export function KanbanColumn({ title, tasks, color, status, onDelete, onUpdate }
   const { setNodeRef, isOver } = useDroppable({ id: status })
 
   return (
-    <div
+    <motion.div
       ref={setNodeRef}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
       className="bg-[#13131a] border border-[#2e2e3e] rounded-2xl p-4 w-92 flex flex-col"
       style={{ borderColor: isOver ? '#7c3aed' : undefined, transition: 'border-color 0.2s' }}
     >
@@ -33,6 +37,6 @@ export function KanbanColumn({ title, tasks, color, status, onDelete, onUpdate }
           <TaskCard key={task.id} task={task} onDelete={onDelete} onUpdate={onUpdate} />
         ))}
       </div>
-    </div>
+    </motion.div>
   )
 }
