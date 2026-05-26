@@ -59,12 +59,21 @@ export function CreateTaskModal({ isOpen, onClose, onTaskCreated }: CreateTaskMo
                 placeholder="Título da tarefa"
                 value={title}
                 onChange={e => setTitle(e.target.value)}
+                onKeyDown={e => {
+                  if (e.key === 'Enter') handleSubmit()
+                }}
                 className="bg-[#1a1a24] border border-[#2e2e3e] rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500 transition-colors"
               />
               <textarea
                 placeholder="Descrição (opcional)"
                 value={description}
                 onChange={e => setDescription(e.target.value)}
+                onKeyDown={e => {
+                  if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault()
+                    handleSubmit()
+                  }
+                }}
                 rows={3}
                 className="bg-[#1a1a24] border border-[#2e2e3e] rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500 transition-colors resize-none"
               />
